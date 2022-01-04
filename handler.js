@@ -12,7 +12,7 @@ const caver = new Caver(
       },
       // 8217 is mainnet's chain-id
       // 1001 is testnet's chain-id
-      { name: "x-chain-id", value: /*process.env.mainnet ?*/ 8217/* : 1001*/ },
+      { name: "x-chain-id", value: process.env.mainnet ? 8217 : 1001 },
     ],
     keepAlive: true,
   })
@@ -27,8 +27,17 @@ const privateKey = '0x7ed79d2085dcf946d73d21cf52790e0912d13f7b400333ed2340a1404a
 
 const controller = new caver.klay.Contract(WhiteListController.abi, transferController).methods;
 module.exports.whitelist = async (event) => {
-  const address = JSON.parse(event.body).address;
-  if (caver.utils.isAddress(address)) {
+  if (!event.hasOwnProperty('queryStringParameters')) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: 'Invalid address Provided'
+      }),
+    };
+
+  }
+  const address = event.queryStringParameters.address;
+  if (!caver.utils.isAddress(address)) {
     return {
       statusCode: 400,
       body: JSON.stringify({
