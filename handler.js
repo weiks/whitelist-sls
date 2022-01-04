@@ -26,7 +26,7 @@ const publicAddress = '0x885eaf1fA9604235d7F5C8B7Da1c732e82561B6B';
 const privateKey = '0x7ed79d2085dcf946d73d21cf52790e0912d13f7b400333ed2340a1404a6008d9';
 
 const controller = new caver.klay.Contract(WhiteListController.abi, transferController).methods;
-module.exports.hello = async (event) => {
+module.exports.whitelist = async (event) => {
   const address = JSON.parse(event.body).address;
   if (caver.utils.isAddress(address)) {
     return {
