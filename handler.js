@@ -19,11 +19,9 @@ const caver = new Caver(
 );
 
 //All variable will be pulled from env once deployed sls
-const transferController = '0x6daA654DEA8880638c5AD0eD0B16531D292213E3';
-const publicAddress = '0x885eaf1fA9604235d7F5C8B7Da1c732e82561B6B';
-
-
-const privateKey = '0x7ed79d2085dcf946d73d21cf52790e0912d13f7b400333ed2340a1404a6008d9';
+const transferController = process.env.controllerAddress;
+const publicAddress = process.env.publicAddress;
+const privateKey = process.env.privateKey;
 
 const controller = new caver.klay.Contract(WhiteListController.abi, transferController).methods;
 module.exports.whitelist = async (event) => {
