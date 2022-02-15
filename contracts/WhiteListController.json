@@ -1,25 +1,26 @@
 {
   "abi": [
     {
-      "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "_user",
           "type": "address"
         },
         {
+          "internalType": "bool",
           "name": "status",
           "type": "bool"
         }
       ],
-      "name": "addAddressToWhiteList",
+      "name": "addOrChangeUserStatus",
       "outputs": [
         {
+          "internalType": "bool",
           "name": "",
           "type": "bool"
         }
       ],
-      "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
     }

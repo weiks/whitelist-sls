@@ -8,7 +8,7 @@ const caver = new Caver(
     headers: [
       {
         name: "Authorization",
-        value: "Basic S0FTS09YVFJNM1NKRTg0QkYzUVpHWlFFOlFUdE1xZjBMbG5xdi0yN3U0U3VpcGtXZUpqMlg3NmV6YldGUGRZTHg=",
+        value: "Basic S0FTS0ZDRzJDTzVYTEdSS1RaQzVaM1FEOnVLVThZa0w5ZF9lQ09vZ2hQejVkamZBeXpIS0M3WmhURGZ1OHBuclo=",
       },
       // 8217 is mainnet's chain-id
       // 1001 is testnet's chain-id
@@ -25,6 +25,7 @@ const privateKey = process.env.privateKey;
 
 const controller = new caver.klay.Contract(WhiteListController.abi, transferController).methods;
 module.exports.whitelist = async (event) => {
+  console.log(event);
   if (!event.hasOwnProperty('queryStringParameters')) {
     return {
       statusCode: 400,
@@ -35,6 +36,7 @@ module.exports.whitelist = async (event) => {
 
   }
   const address = event.queryStringParameters.address;
+  console.log(address)
   if (!caver.utils.isAddress(address)) {
     return {
       statusCode: 400,
@@ -44,7 +46,7 @@ module.exports.whitelist = async (event) => {
     };
   }
 
-  let data = controller.addAddressToWhiteList(address, true).encodeABI();
+  let data = controller.addOrChangeUserStatus(address, true).encodeABI();
 
   let signedTransaction = await caver.klay.accounts.signTransaction(
     {
