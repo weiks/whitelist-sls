@@ -46,6 +46,21 @@ module.exports.whitelist = async (event) => {
     };
   }
 
+  const isWhitelisted = await controller.isWhiteListed(address).call();
+  console.log(isWhitelisted);
+  if (isWhitelisted) {
+    return {
+      statusCode: 200,
+      body: JSON.stringify(
+        {
+          message: 'Address Already Whitelisted'
+        },
+        null,
+        2
+      ),
+    };
+  }
+
   let data = controller.addOrChangeUserStatus(address, true).encodeABI();
 
   let signedTransaction = await caver.klay.accounts.signTransaction(
